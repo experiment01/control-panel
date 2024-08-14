@@ -46,6 +46,7 @@ function animateText() {
 window.addEventListener('load', stretchText);
 window.addEventListener('resize', stretchText);
 
+const wsProtocol = window.location.protocol === 'https:' ? 'wss' : 'ws';
 const ws = new WebSocket(`${wsProtocol}://${window.location.host}`);
 
 // Display incoming messages from the server

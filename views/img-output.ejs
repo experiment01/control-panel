@@ -69,6 +69,7 @@
             });
         }
 
+        const wsProtocol = window.location.protocol === 'https:' ? 'wss' : 'ws';
         const ws = new WebSocket(`${wsProtocol}://${window.location.host}`);
 
         // Display incoming messages from the server
