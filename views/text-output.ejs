@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Output</title>
+    <style>
+        @import url("https://fonts.googleapis.com/css?family=Red+Hat+Display");
+
+        @keyframes fade-in {
+            from {opacity: 0;}
+            to {opacity: 1;}
+        }
+
+        @keyframes fade-out {
+            from {opacity: 1;}
+            to {opacity: 0;}
+        }
+
+        .fade-out {
+            animation: fade-out 0.5s forwards;
+        }
+
+        .fade-in {
+            animation: fade-in 0.5s forwards;
+        }
+
+        .container {
+            width: 100vw;
+            height: 100vh; /* adjust as needed */
+            overflow: hidden;
+            position: relative;
+            border: 1px black;
+        }
+        .text {
+            font-family: "Red Hat Display";
+            font-weight: 800;
+            font-size: 72px;
+            text-transform: uppercase;
+            display: inline-block;
+            white-space: nowrap;
+            transform-origin: top left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="text" id="dataDisplay"><%= initialText %></div>
+    </div>
+
+    <script src="js/text-output.js"></script>
+</body>
+</html>

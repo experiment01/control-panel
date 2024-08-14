@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Output</title>
+    <style>
+        @keyframes fade-in {
+            from {opacity: 0;}
+            to {opacity: 1;}
+        }
+
+        @keyframes fade-out {
+            from {opacity: 1;}
+            to {opacity: 0;}
+        }
+
+        .fade-out {
+            animation: fade-out 0.5s forwards;
+        }
+
+        .fade-in {
+            animation: fade-in 0.5s forwards;
+        }
+        
+        html, body {
+            height: 100%;
+            margin: 0;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #imgDisplay {
+            height: 100vh;
+            width: auto;
+            max-width: 100vw;
+            object-fit: contain;
+            opacity: 1; /* Ensure default opacity is 1 */
+            transition: opacity 0.5s; /* Smooth transition for opacity changes */
+        }
+    </style>
+</head>
+<body>
+    <img id="imgDisplay">
+
+    <script>
+        function animateImage() {
+            return new Promise((resolve) => {
+                const imgDisplay = document.getElementById('imgDisplay');
+                imgDisplay.classList.add('fade-out');
+                setTimeout(() => {
+                    // Wait for the fade-out animation to complete
+                    imgDisplay.classList.remove('fade-out');
+                    // Process the image
+                    resolve();
+                }, 500); // Duration of the fade-out animation
+            }).then(() => {
+                // Process the image and then fade in
+                requestAnimationFrame(() => {
+                    const imgDisplay = document.getElementById('imgDisplay');
+                    imgDisplay.classList.add('fade-in');
+                    setTimeout(() => {
+                        // Wait for the fade-in animation to complete
+                        imgDisplay.classList.remove('fade-in');
+                    }, 500); // Duration of the fade-in animation
+                });
+            });
+        }
+
+        const ws = new WebSocket('<%= websocketUrl %>');
+
+        // Display incoming messages from the server
+        ws.onmessage = (message) => {
+            const data = message.data;
+
+            if (data instanceof Blob) {
+                // Create a FileReader to read the Blob
+                const reader = new FileReader();
+
+                reader.onload = () => {
+                    // The result is a string containing the JSON data
+                    const jsonString = reader.result;
+                    try {
+                        // Parse the JSON string into an array
+                        const dataArray = JSON.parse(jsonString);
+                        console.log('Received array data:', dataArray);
+                        
+                        animateImage().then(() => {
+                            document.getElementById('imgDisplay').setAttribute("src", dataArray[1]);
+                        });
+                    } catch (error) {
+                        console.error('Failed to parse JSON:', error);
+                    }
+                };
+
+                // Read the Blob as text
+                reader.readAsText(data);
+            } else {
+                console.error('Received non-Blob data:', message.data);
+            }
+        };
+
+        ws.onopen = () => {
+            console.log('Connected to WebSocket server');
+        };
+
+        ws.onclose = () => {
+            console.log('Disconnected from WebSocket server');
+        };
+    </script>
+</body>
+</html>

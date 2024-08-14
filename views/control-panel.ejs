@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <h1><%= header %></h1>
+    <div id="wrapper">
+        <div class="module-container">
+            <!-- Render existing modules dynamically -->
+            <% modules.forEach((module, index) => { %>
+                <div class="module" id="module<%= index %>">
+                    <button class="delete-button">-</button>
+                    <div class="id-number">1.</div>
+                    <input type="text" id="inputText<%= index %>" value="<%= module.text %>" placeholder="Enter text">
+                    <input type="file" id="inputFile<%= index %>" accept="image/*">
+                    <img id="outputImg<%= index %>" src="<%= module.image %>" alt="NO IMAGE">
+                    <button class="send-button">Send</button>
+                </div>
+            <% }) %>
+        </div>
+        <button id="moduleAdd">+</button>
+        <button id="exportJSON" >Export</button>
+        <button id="importJSON" >Import</button>
+    </div>
+    <script src="js/control-panel.js"></script>
+</body>
+</html>
