@@ -2,16 +2,13 @@ const express = require('express');
 const http = require('http');
 const WebSocket = require('ws');
 const path = require('path');
+
 const app = express();
 const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
 
-
-
 // Serve static files
 app.use(express.static(path.join(__dirname, 'public')));
-
-
 
 // Broadcast received data to all connected clients except the sender
 wss.on('connection', ws => {
@@ -25,9 +22,9 @@ wss.on('connection', ws => {
         });
     });
 
-    ws.on('error', (error) => {
+    ws.on('error', error => {
         console.error('WebSocket error:', error);
-    });    
+    });
 
     const pingInterval = setInterval(() => {
         if (ws.readyState === WebSocket.OPEN) {
@@ -41,9 +38,7 @@ wss.on('connection', ws => {
     });
 });
 
-
-
-// EJS
+// EJS - example modules
 const sampleModules = [
     { text: '', image: null }
 ];
@@ -70,11 +65,9 @@ app.get('/text-output', (req, res) => {
     });
 });
 
-
-
 // Start the server
 const PORT = process.env.PORT || 3000;
-server.listen(PORT, () => {
+server.listen(PORT, '0.0.0.0', () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });
 
@@ -90,7 +83,7 @@ function shutdown() {
     setTimeout(() => {
         console.error('Forcing server shutdown...');
         process.exit(1);
-    }, 1000); // 1 seconds timeout
+    }, 1000); // 1-second timeout
 }
 
 // Listen for termination signals
