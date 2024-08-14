@@ -53,7 +53,7 @@ app.get('/', (req, res) => {
 
 app.get('/img-output', (req, res) => {
     res.render('img-output', { 
-        websocketUrl: 'ws://localhost:3000'
+        websocketUrl: `ws://${req.headers.host}`  // Automatically uses the correct host
     });
 });
 
