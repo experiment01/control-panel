@@ -29,8 +29,15 @@ wss.on('connection', ws => {
         console.error('WebSocket error:', error);
     });    
 
+    const pingInterval = setInterval(() => {
+        if (ws.readyState === WebSocket.OPEN) {
+            ws.ping();
+        }
+    }, 30000); // Ping every 30 seconds
+
     ws.on('close', () => {
         console.log('Client disconnected');
+        clearInterval(pingInterval);
     });
 });
 
@@ -53,7 +60,7 @@ app.get('/', (req, res) => {
 
 app.get('/img-output', (req, res) => {
     res.render('img-output', { 
-        websocketUrl: `ws://${req.headers.host}`  // Automatically uses the correct host
+        websocketUrl: `wss://${req.headers.host}`
     });
 });
 
