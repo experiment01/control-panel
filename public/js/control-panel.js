@@ -1,4 +1,5 @@
-const ws = new WebSocket('ws://localhost:3000');
+const wsProtocol = window.location.protocol === 'https:' ? 'wss' : 'ws';
+const ws = new WebSocket(`${wsProtocol}://${window.location.host}`);
 
 const moduleContainer = document.querySelector('.module-container')
 

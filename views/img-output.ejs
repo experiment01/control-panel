@@ -69,7 +69,7 @@
             });
         }
 
-        const ws = new WebSocket('<%= websocketUrl %>');
+        const ws = new WebSocket(`${wsProtocol}://${window.location.host}`);
 
         // Display incoming messages from the server
         ws.onmessage = (message) => {
