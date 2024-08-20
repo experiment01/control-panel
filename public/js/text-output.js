@@ -13,7 +13,7 @@ function stretchText() {
     const textHeight = text.scrollHeight;
     const scaleHeight = containerHeight / textHeight;
 
-    if (text.innerHTML.length > 32) {
+    if (text.innerHTML.length > 30) {
         text.style.transform = `scale(${scaleWidth}, ${scaleHeight})`;
     } else {
         text.style.transform = `scale(${scaleHeight}, ${scaleHeight})`;
