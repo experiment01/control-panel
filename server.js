@@ -1,7 +1,6 @@
 const http = require('http');
 const socketIo = require('socket.io');
 const express = require('express');
-const path = require('path'); // Import the path module
 
 // Create an Express app to handle HTTP requests
 const app = express();
@@ -36,18 +35,7 @@ io.on('connection', (socket) => {
   });
 });
 
-// Serve static assets in production
-if (process.env.NODE_ENV === 'production') {
-  // Serve static files from the React app build folder
-  app.use(express.static(path.join(__dirname, 'client', 'build')));
-
-  // Serve index.html for all routes in production (so React Router can work)
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
-  });
-}
-
 // Start the server
-server.listen(process.env.PORT || 3001, () => {
-  console.log('Server is running on port', process.env.PORT || 3001);
+server.listen(3001, () => {
+  console.log('Server is running on port 3001');
 });
