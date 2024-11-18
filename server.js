@@ -1,17 +1,10 @@
 const http = require('http');
 const socketIo = require('socket.io');
 const express = require('express');
+const path = require('path'); // Import the path module
 
 // Create an Express app to handle HTTP requests
 const app = express();
-
-app.get('/', (req, res) => {
-  res.render('control-panel', {
-      title: "Control Panel",
-      header: "Patriot Daily Control Panel",
-      modules: sampleModules
-  });
-});
 
 // Increase the payload size limit for Socket.IO
 const server = http.createServer(app);
@@ -42,6 +35,17 @@ io.on('connection', (socket) => {
     console.log('A client disconnected');
   });
 });
+
+// Serve static assets in production
+if (process.env.NODE_ENV === 'production') {
+  // Serve static files from the React app build folder
+  app.use(express.static(path.join(__dirname, 'client', 'build')));
+
+  // Serve index.html for all routes in production (so React Router can work)
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
+  });
+}
 
 // Start the server
 server.listen(process.env.PORT || 3001, () => {
