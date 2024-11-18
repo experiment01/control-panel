@@ -3,12 +3,22 @@ const socketIo = require('socket.io');
 const express = require('express');
 
 const PORT = process.env.PORT || 3000;
-const INDEX = '/index.html';
+const INDEX = '/public/index.html'; // Updated path to index.html
 
-const server = express()
-  .use((req, res) => res.sendFile(INDEX, { root: __dirname }), express.json({ limit: '10mb' }))
-  .listen(PORT, () => console.log(`Listening on ${PORT}`));
+const app = express();
 
+// Serve static files from the public directory
+app.use(express.static('public'));
+
+// Middleware to handle JSON payloads
+app.use(express.json({ limit: '10mb' }));
+
+// Route to serve the index.html file
+app.get('/', (req, res) => res.sendFile(INDEX, { root: __dirname }));
+
+const server = http.createServer(app);
+
+// Setup socket.io with larger payload size
 const io = socketIo(server, {
   cors: {
     origin: '*', // Allow all origins
@@ -32,3 +42,6 @@ io.on('connection', (socket) => {
     console.log('A client disconnected');
   });
 });
+
+// Start the server
+server.listen(PORT, () => console.log(`Listening on ${PORT}`));
