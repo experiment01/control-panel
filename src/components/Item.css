@@ -1,0 +1,136 @@
+.item {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    height: 125px;
+}
+
+.item:hover .sendButton {
+    display: flex;
+    flex-grow: 1;
+}
+
+.innerDiv {
+    position: relative;
+    flex-grow: 4;
+
+    padding: 20px;
+
+    background: #272A33;
+    border: 1px solid #3C404D;
+    border-radius: 5px;
+}
+
+.itemForm {
+    position: absolute;
+    left: 200px;
+    top: 40px;
+}
+
+.innerDiv input[type='text'] {
+    height: 100%;
+    font-size: 24px;
+    padding: 5px 15px 5px 15px;
+    width: calc(100% - 50px);
+}
+
+.inputImgLabel {
+    position: absolute;
+
+    margin: 10px;
+    top: 0;
+    left: 70px;
+
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    cursor: pointer;
+
+    border: 1px solid #3C404D;
+    border-radius: 5px;
+}
+
+.inputImg {
+    position: relative;
+
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    cursor: pointer;
+
+    border: 1px solid #3C404D;
+    border-radius: 5px;
+}
+
+.icon {
+    position: absolute;
+
+    top: 20%;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 30px;
+
+    padding: 5px;
+
+    background: #1D1F26;
+    border-radius: 30px;
+}
+
+.icon button {
+    display: flex;
+    background: none;
+    border: none;
+    transition: transform 0.1s ease, opacity 0.1s;
+}
+
+.icon button:hover {
+    cursor: pointer;
+}
+
+.icon .up:hover {
+    transform: translateY(-3px);
+}
+
+.icon .down:hover {
+    transform: translateY(3px);
+}
+
+.item:hover .delButton {
+    background: #272A33;
+    border: none;
+    border-radius: 30px;
+    opacity: 1;
+    padding: 10px;
+    transform: translateX(-15px);
+    cursor: pointer;
+    transition: transform 0.1s ease, opacity 0.1s;
+}
+
+.delButton {
+    position: absolute;
+    right: 0;
+    bottom: 22.5%;
+    background: none;
+    border: none;
+    opacity: 0;
+    padding: 10px;
+    transition: transform 0s;
+}
+
+.sendButton {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+
+    color: lightblue;
+    font-weight: bold;
+}
+
+/* Hides the file input but keeps it functional */
+input[type="file"] {
+    position: absolute; /* Position it off-screen */
+    top: -9999px; /* Move it out of view */
+}

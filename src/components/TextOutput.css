@@ -1,0 +1,38 @@
+@import url("https://fonts.googleapis.com/css?family=Red+Hat+Display");
+
+@keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fade-out {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+.fade-in {
+    animation: fade-in 0.5s forwards;
+}
+
+.fade-out {
+    animation: fade-out 0.5s forwards;
+}
+
+.textContainer {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+    border: 1px black;
+}
+
+.text {
+    font-family: "Red Hat Display";
+    font-weight: 800;
+    font-size: 72px;
+    text-transform: uppercase;
+    display: inline-block;
+    white-space: nowrap;
+    transform-origin: top left;
+    color: black;
+}
