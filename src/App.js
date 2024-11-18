@@ -11,7 +11,7 @@ import AddItemButton from './components/AddItemButton';
 import TextOutput from './components/TextOutput';
 import ImgOutput from './components/ImgOutput';
 
-const socket = io('https://still-wave-71113-90132f41daea.herokuapp.com');
+const socket = io("https://still-wave-71113-90132f41daea.herokuapp.com/");
 
 function List() {
   const [items, setItems] = useState([]);

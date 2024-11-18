@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { io } from 'socket.io-client';
 import './TextOutput.css';
 
-const socket = io('http://localhost:3001');
+const socket = io('https://still-wave-71113-90132f41daea.herokuapp.com/');
 
 function TextOutput() {
     const [text, setText] = useState('');
