@@ -5,9 +5,12 @@ const express = require('express');
 // Create an Express app to handle HTTP requests
 const app = express();
 
-// Root route for HTTP requests
 app.get('/', (req, res) => {
-  res.send('Hello, Heroku! Your server is up and running!');
+  res.render('control-panel', {
+      title: "Control Panel",
+      header: "Patriot Daily Control Panel",
+      modules: sampleModules
+  });
 });
 
 // Increase the payload size limit for Socket.IO
