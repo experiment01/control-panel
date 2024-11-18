@@ -15,12 +15,7 @@ const io = socketIo(server, {
     transports: ['websocket', 'polling'], // Allow both websocket and polling
   },
   maxHttpBufferSize: 1e7, // Increase buffer size
-  path: '/socket.io', // Explicitly set the path for socket.io (default is '/socket.io')
 });;
-
-app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/public/index.html'); // Make sure to replace 'index.html' with the correct path to your main HTML file
-});
 
 app.use(express.json({ limit: '10mb' })); // You can also increase this to allow larger payloads
 
