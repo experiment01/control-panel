@@ -1,41 +1,41 @@
 const http = require('http');
 const socketIo = require('socket.io');
 const express = require('express');
+const path = require('path');
 
 const PORT = process.env.PORT || 3000;
-const INDEX = '/public/index.html'; // Updated path to index.html
 
 const app = express();
 
-// Serve static files from the public directory
-app.use(express.static('public'));
+// Serve static files from the React app's build directory
+app.use(express.static(path.join(__dirname, 'build')));
 
 // Middleware to handle JSON payloads
 app.use(express.json({ limit: '10mb' }));
 
-// Route to serve the index.html file
-app.get('/', (req, res) => res.sendFile(INDEX, { root: __dirname }));
+// Route to serve the React app
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
 
 const server = http.createServer(app);
 
-// Setup socket.io with larger payload size
 const io = socketIo(server, {
   cors: {
-    origin: '*', // Allow all origins
+    origin: '*',
     methods: ['GET', 'POST'],
-    transports: ['websocket', 'polling'], // Allow both websocket and polling
+    transports: ['websocket', 'polling'],
   },
-  maxHttpBufferSize: 1e7, // Increase buffer size
+  maxHttpBufferSize: 1e7,
 });
 
 // Handle client connections
 io.on('connection', (socket) => {
   console.log('A client connected');
 
-  // Listen for data sent from clients
   socket.on('sendData', (data) => {
     console.log('Received data:', data);
-    socket.broadcast.emit('receiveData', data); // Broadcast the data to all clients (except the sender)
+    socket.broadcast.emit('receiveData', data);
   });
 
   socket.on('disconnect', () => {
