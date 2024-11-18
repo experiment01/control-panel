@@ -11,7 +11,7 @@ import AddItemButton from './components/AddItemButton';
 import TextOutput from './components/TextOutput';
 import ImgOutput from './components/ImgOutput';
 
-const socket = io(process.env.REACT_APP_SOCKET_SERVER || 'http://localhost:3001');
+const socket = io('https://still-wave-71113-90132f41daea.herokuapp.com/'); // Update to your Heroku app's URL for production
 
 function List() {
   const [items, setItems] = useState([]);
