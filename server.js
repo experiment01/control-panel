@@ -18,9 +18,11 @@ const io = socketIo(server, {
   path: '/socket.io', // Explicitly set the path for socket.io (default is '/socket.io')
 });;
 
-app.use(express.static(path.join(__dirname, '../../build')));
+app.get('/', (req, res) => {
+  res.sendFile(__dirname + '/public/index.html'); // Make sure to replace 'index.html' with the correct path to your main HTML file
+});
 
-app.get('/', (req, res, next) => res.sendFile(__dirname + './index.html'), express.json({ limit: '10mb' }));
+app.use(express.json({ limit: '10mb' })); // You can also increase this to allow larger payloads
 
 // Handle client connections
 io.on('connection', (socket) => {
