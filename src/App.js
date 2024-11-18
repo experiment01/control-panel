@@ -11,7 +11,7 @@ import AddItemButton from './components/AddItemButton';
 import TextOutput from './components/TextOutput';
 import ImgOutput from './components/ImgOutput';
 
-const socket = io('http://localhost:3001'); // Connect to your WebSocket server
+const socket = io(process.env.REACT_APP_SOCKET_SERVER || 'http://localhost:3001');
 
 function List() {
   const [items, setItems] = useState([]);

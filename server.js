@@ -8,15 +8,26 @@ const app = express();
 // Increase the payload size limit for Socket.IO
 const server = http.createServer(app);
 
-// Setup socket.io with larger payload size
+const allowedOrigins = [
+  'http://localhost:3000', // Local dev URL
+  'https://still-wave-71113-90132f41daea.herokuapp.com/', // Production URL
+];
+
 const io = socketIo(server, {
   cors: {
-    origin: '*', // Allow all origins
-    methods: ['GET', 'POST'], // Allow specific methods
-    transports: ['websocket', 'polling'], // Allow both websocket and polling
+    origin: (origin, callback) => {
+      if (allowedOrigins.indexOf(origin) !== -1) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
+    methods: ['GET', 'POST'],
+    transports: ['websocket', 'polling'],
   },
   maxHttpBufferSize: 1e7, // Increase this value (default is 1 MB)
 });
+
 
 app.use(express.json({ limit: '10mb' })); // You can also increase this to allow larger payloads
 
@@ -36,6 +47,6 @@ io.on('connection', (socket) => {
 });
 
 // Start the server
-server.listen(3001, () => {
-  console.log('Server is running on port 3001');
+server.listen(process.env.REACT_APP_SOCKET_SERVER || 3001, () => {
+  console.log('Server is running on port', process.env.REACT_APP_SOCKET_SERVER || 3001);
 });
