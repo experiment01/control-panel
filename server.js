@@ -8,15 +8,15 @@ const app = express();
 // Increase the payload size limit for Socket.IO
 const server = http.createServer(app);
 
-// Setup socket.io with larger payload size
 const io = socketIo(server, {
   cors: {
-    origin: 'https://still-wave-71113-90132f41daea.herokuapp.com/',
-    methods: ['GET', 'POST'], // Allow specific methods
+    origin: '*', // Allow all origins
+    methods: ['GET', 'POST'],
     transports: ['websocket', 'polling'], // Allow both websocket and polling
   },
-  maxHttpBufferSize: 1e7, // Increase this value (default is 1 MB)
-});
+  maxHttpBufferSize: 1e7, // Increase buffer size
+  path: '/socket.io', // Explicitly set the path for socket.io (default is '/socket.io')
+});;
 
 app.use(express.json({ limit: '10mb' })); // You can also increase this to allow larger payloads
 
@@ -36,6 +36,7 @@ io.on('connection', (socket) => {
 });
 
 // Start the server
-server.listen(3001, () => {
-  console.log('Server is running on port 3001');
+const PORT = process.env.PORT || 3001; // Use Heroku's dynamic port
+server.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
