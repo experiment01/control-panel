@@ -1,6 +1,5 @@
 .item {
     display: flex;
-    flex-direction: row;
     gap: 10px;
     height: 125px;
 }
@@ -13,6 +12,7 @@
 .innerDiv {
     position: relative;
     flex-grow: 4;
+    height: 83px;
 
     padding: 20px;
 
@@ -65,17 +65,16 @@
 .icon {
     position: absolute;
 
-    top: 20%;
+    top: 25%;
 
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 5px;
     width: 30px;
 
-    padding: 5px;
-
+    padding: 2px;
     background: #1D1F26;
-    border-radius: 30px;
+    border-radius: 5px;
 }
 
 .icon button {

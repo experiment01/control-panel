@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { io } from 'socket.io-client';
 import {
   BrowserRouter as Router,
@@ -15,13 +15,17 @@ const socket = io();
 
 function List() {
   const [items, setItems] = useState([]);
+  const [shouldScrollToBottom, setShouldScrollToBottom] = useState(false);
+  const containerRef = useRef(null); // Reference to the container element
 
   const handleAddItem = () => {
     setItems((prevItems) => [...prevItems, { id: Date.now(), text: '', previewSrc: null }]);
+    setShouldScrollToBottom(true);
   };
 
   const handleDeleteItem = (id) => {
     setItems((prevItems) => prevItems.filter((item) => item.id !== id));
+    setShouldScrollToBottom(false);
   };
 
   const handleMoveUp = (id) => {
@@ -68,9 +72,16 @@ function List() {
     socket.emit('sendData', data);
   };
 
+  useEffect(() => {
+    if (shouldScrollToBottom && containerRef.current) {
+      containerRef.current.scrollTop = containerRef.current.scrollHeight;
+      setShouldScrollToBottom(false); // Reset the scroll flag
+    }
+  }, [items]);
+
   return (
     <div className='App'>
-      <div className='container'>
+      <div className='container' ref={containerRef}>
         {items.map((item) => (
           <Item
             key={item.id}
